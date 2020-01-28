@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-
 @RestController
 public class CurrencyExchangeController {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    //private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger("EXCHANGE_LOGGER");
 
     @Autowired
     private Environment environment;
@@ -28,6 +27,7 @@ public class CurrencyExchangeController {
             (@PathVariable String from, @PathVariable String to) {
         ExchangeValue exchangeValue = exchangeValueRepository.findByFromAndTo(from,to);
         exchangeValue.setPort(Integer.parseInt(environment.getProperty("local.server.port")));
+        logger.info("#####{}",exchangeValue);
         return exchangeValue;
     }
 }
